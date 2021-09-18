@@ -2,7 +2,7 @@
 //https://github.com/edgeimpulse/example-esp32-cam/tree/main/Examples/Basic-Image-Classification
 //Include Edge impulse inferencing library
 
-#include <forest_fire_inferencing.h>
+#include <forest_fire_clone_inferencing.h>
 
 #include "esp_http_server.h"
 
@@ -72,7 +72,7 @@ void setup()
     config.pin_reset = RESET_GPIO_NUM;
     config.xclk_freq_hz = 20000000;
     config.pixel_format = PIXFORMAT_JPEG;
-    config.frame_size = FRAMESIZE_SVGA;
+    config.frame_size = FRAMESIZE_QVGA;
     config.jpeg_quality = 12;
     config.fb_count = 1;
 
@@ -169,7 +169,7 @@ void classify()
         //Enable Lora module to send message
         digitalWrite(LORA_PIN, LOW);
         delay(50);
-        // I choose 0.2 but you can select your own value
+        // I choose 0.2 as the model tends to favor nofire than fire
         if (result.classification[0].value > 0.2)
         {
             Serial.println("0x001fire");
@@ -268,7 +268,7 @@ void loop()
         //this is the delay function which determines how many seconds 
         //we will sleep before we take and classify image again.
         //The power usage chart is based on this delay value        
-        delay(10000);
+        delay(1000);
     }
     delay(10);
 }
